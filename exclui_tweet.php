@@ -2,23 +2,19 @@
 
     session_start();
 
-    if(!$_SESSION['usuario']){
+    if(!isset($_SESSION['usuario'])){
 		header('Location: index.php?erro=1');
-	}
+	} else {
+        require_once('db.class.php');
 
-    require_once('db.class.php');
+        $id_usuario = $_SESSION['id'];
+        $id_tweet   = $_POST['id_tweet'];
 
-    $id_usuario = $_SESSION['id'];
+        $objDb = new db();
+        $link = $objDb->conecta_mysql();
 
-    if($id_usuario == ''){
-        die();
+        $sql = "DELETE FROM tweet WHERE id_tweet = $id_tweet AND id_usuario = $id_usuario limit 1";
+
+        mysqli_query($link, $sql);
     }
-
-    $objDb = new db();
-    $link = $objDb->conecta_mysql();
-    
-    $sql = "DELETE FROM tweet WHERE id_usuario = $id_usuario limit 1";
-
-    $r = mysqli_query($link, $sql); 
-
 ?>

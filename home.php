@@ -31,6 +31,20 @@
 						});
 					}
 				});
+				$('.excluir-tweet').click(function(e) {
+				  e.preventDefault();
+				  /* sempre que alguém clicar num elemento com a classe excluir-tweet, essa função vai acontecer */
+				  $.ajax({
+				    url: 'exclui_tweet.php',
+				    method: 'POST',
+				    data: { id_tweet : this.id_tweet },
+				    success: function(data){
+				      qtde_tweets();
+				      atualizaTweet();
+				    }
+				  });
+
+				});
 				function atualizaTweet(){
 					//carregar os tweets
 					$.ajax({
